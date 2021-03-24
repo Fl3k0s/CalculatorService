@@ -13,26 +13,34 @@ namespace Server.Controllers
 	public class CalculatorController : ControllerBase
 	{
 		private readonly IOperations _operations;
-
+		private static Dictionary<string, Operation> listOfOperations;
 		public CalculatorController(IOperations operations)
 		{
 			_operations = operations;
+			listOfOperations = new Dictionary<string, Operation>();
 		}
 
 		[HttpPost("add")]
-		public IActionResult Add([FromBody] List<int> numbers){
+		public IActionResult Add([FromBody] List<int> numbers, string id){
 			try{
 				int sum = _operations.Add(numbers);
 				Sum add = new Sum
 				{
 					sum = sum
 				};
+
+				if (id.Length > 0){
+					Operation op = GetOperation(numbers, sum, " + ");
+					listOfOperations.Add(id, op);
+				}
 				return Ok(add);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
 			}
 			
 		}
+
+		
 
 		[HttpPost("sub")]
 		public IActionResult Sub([FromBody] Sub sub){
@@ -49,7 +57,7 @@ namespace Server.Controllers
 			}
 		}
 		[HttpPost("mult")]
-		public IActionResult Mult([FromBody] Factors factors){
+		public IActionResult Mult([FromBody] Factors factors, string id){
 			List<int> numbers = factors.factors;
 
 			try{
@@ -58,6 +66,12 @@ namespace Server.Controllers
 				{
 					product = result
 				};
+
+				if (id.Length > 0)
+				{
+					Operation op = GetOperation(numbers, result, " * ");
+					listOfOperations.Add(id, op);
+				}
 				return Ok(product);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
@@ -83,6 +97,7 @@ namespace Server.Controllers
 				return BadRequest(GenerateBadRequest());
 			}
 		}
+
 		[HttpPost("sqrt")]
 		public IActionResult Sqrt([FromBody] Sqrt sqrt){
 			int number =sqrt.number;
@@ -99,6 +114,26 @@ namespace Server.Controllers
 			{
 				return BadRequest(GenerateBadRequest());
 			}
+		}
+
+		public Operation GetOperation(List<int> num, int sum, string sign)
+		{
+			string cadena = "";
+
+			foreach (int n in num)
+			{
+				cadena += n + " +";
+			}
+			cadena = cadena.Substring(0, cadena.Length - 2) + " = " + sum;
+
+			Operation op = new Operation
+			{
+				operation = "sum",
+				calculation = cadena,
+				date = DateTime.Now
+			};
+
+			return op;
 		}
 
 		public Error GenerateBadRequest(){
