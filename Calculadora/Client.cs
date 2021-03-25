@@ -27,13 +27,20 @@ namespace Calculadora
 			//ask the user for him id
 			Console.WriteLine("Tell me your id (if you don have, relax, can be empty)");
 			trackId = Console.ReadLine();
-
+			trackId = trackId.Trim();
+			client.DefaultRequestHeaders.Add("id", trackId);
+			
 			//the menu of the app
 			Action();
+
+			if (trackId.Length > 0)
+				OperationsPerformed();
+
+			Console.WriteLine("See you next time");
 		}
 
 
-		public static void Action(){
+		public async static void Action(){
 			//comand who tell the action of the user
 			string command;
 			do
@@ -74,14 +81,18 @@ namespace Calculadora
 						int n = ReadNumber();
 						Square(n);
 						break;
+					case "operations":
+						OperationsPerformed();
+						break;
 					case "exit":
-						Console.WriteLine("Good bye");
 						break;
 					default:
 						//si el usuario escribe un comando que no corresponde o escribe un comando mal se le informara
 						Console.WriteLine("comand not exist, try again");
 						break;
+						
 				}
+				
 			} while (!command.Equals("exit"));
 		}
 
@@ -93,6 +104,8 @@ namespace Calculadora
 			{
 				addens = numbers
 			};
+
+			
 			var request = ApiCall(url, add);
 			var result = JsonSerializer.Deserialize<Sum>(await request);
 			Console.WriteLine(result.sum);
@@ -150,10 +163,37 @@ namespace Calculadora
 
 		}
 
+		public async static void OperationsPerformed(){
+			string url = $"http://localhost:5000/calculator/operations";
+
+			var response = await client.GetAsync(url);
+			string responseString = "";
+			if (response.StatusCode == HttpStatusCode.OK)
+			{
+				responseString = await response.Content.ReadAsStringAsync();
+				var result = JsonSerializer.Deserialize<List<Operation>>(responseString);
+				foreach (Operation o in result)
+				{
+					Console.WriteLine("--------------------");
+					Console.WriteLine("Operation:"+o.operation);
+					Console.WriteLine("Calculation:"+o.calculation);
+					Console.WriteLine("Date:"+o.date);
+				}
+			}
+			else
+			{
+				Console.WriteLine(response.ToString());
+				
+			}
+			
+		}
+
+		
 		public async static Task<string> ApiCall(string url, Object o)
 		{
 			var json = JsonSerializer.Serialize(o);
 			var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+			
 			var response = await client.PostAsync(url, content);
 
 			if (response.StatusCode == HttpStatusCode.OK)
@@ -164,9 +204,10 @@ namespace Calculadora
 			else
 			{
 				Console.WriteLine(response.ToString());
-				return null;
+				return "a llorar a cuenca";
 			}
 
+			return "cagandome en lo cagable";
 		}
 
 		public static void ReadOnlyTwoNumbers(){

@@ -10,7 +10,7 @@ namespace Server.Service
 		public int Add(List<int> add)
 		{
 			int sum = 0;
-			Console.WriteLine(add.Count.ToString);
+			
 			foreach (int n in add)
 				sum += n;
 
@@ -29,7 +29,7 @@ namespace Server.Service
 
 		public int Mult(List<int> mults)
 		{
-			int mult = 0;
+			int mult = 1;
 
 			foreach (int n in mults)
 				mult *= n;

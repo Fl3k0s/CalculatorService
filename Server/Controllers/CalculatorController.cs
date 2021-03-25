@@ -14,41 +14,47 @@ namespace Server.Controllers
 	public class CalculatorController : ControllerBase
 	{
 		private readonly IOperations _operations;
-		private static Dictionary<string, Operation> listOfOperations;
+		private static ListOfOperations listOfOperations = new ListOfOperations();
+		private static Dictionary<string, ListOfOperations> dictionaryOfOperations = new Dictionary<string, ListOfOperations>();
+
 		public CalculatorController(IOperations operations)
 		{
 			_operations = operations;
-			listOfOperations = new Dictionary<string, Operation>();
-			
 		}
 
 
 		[HttpPost("add")]
-		public async Task<IActionResult> Add([FromBody] Adds numbers){
+		public async Task<IActionResult> Add([FromBody] Adds numbers, [FromHeader]string id){
 			try{
-
+				
 				int sum = _operations.Add(numbers.addens);
 				Sum add = new Sum
 				{
 					sum = sum
 				};
 
+				if (id.Length > 0)
+				{
+					Operation op = GetOperation(numbers.addens, sum, " + ");
+					listOfOperations.operaciones.Add(op);
+					if (!dictionaryOfOperations.ContainsKey(id))
+					{
+						dictionaryOfOperations.Add(id, new ListOfOperations());
+					}
+					dictionaryOfOperations[id].operaciones.Add(op);
+				}
 
-				/*if (id.Length > 0){
-					Operation op = GetOperation(numbers, sum, " + ");
-					listOfOperations.Add(id, op);
-				}*/
 				return Ok(add);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
 			}
-			
 		}
 
 		
 
 		[HttpPost("sub")]
-		public IActionResult Sub([FromBody] Sub sub){
+		public async Task<IActionResult> Sub([FromBody] Sub sub, [FromHeader] string id)
+		{
 			int[] numbers = { sub.minuend,sub.subtrahen};
 			try{
 				int result = _operations.Sub(numbers);
@@ -56,6 +62,16 @@ namespace Server.Controllers
 				{
 					diference = result
 				};
+				if (id.Length > 0)
+				{
+					Operation op = GetOperation(numbers.ToList<int>(), result, " - ");
+					listOfOperations.operaciones.Add(op);
+					if (!dictionaryOfOperations.ContainsKey(id))
+					{
+						dictionaryOfOperations.Add(id, new ListOfOperations());
+					}
+					dictionaryOfOperations[id].operaciones.Add(op);
+				}
 				return Ok(dif);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
@@ -63,21 +79,26 @@ namespace Server.Controllers
 		}
 
 		[HttpPost("mult")]
-		public async Task<IActionResult> Mult([FromBody] Factors factors){
-			List<int> numbers = factors.factors;
-
+		public async Task<IActionResult> Mult([FromBody] Factors factors, [FromHeader] string id)
+		{
 			try{
-				int result = _operations.Mult(numbers);
+				int result = _operations.Mult(factors.factors);
 				Product product = new Product
 				{
 					product = result
 				};
-				/*
+				
 				if (id.Length > 0)
 				{
-					Operation op = GetOperation(numbers, result, " * ");
-					listOfOperations.Add(id, op);
-				}*/
+					Operation op = GetOperation(factors.factors, result, " * ");
+					listOfOperations.operaciones.Add(op);
+					if (!dictionaryOfOperations.ContainsKey(id))
+					{
+						dictionaryOfOperations.Add(id, new ListOfOperations());
+					}
+					dictionaryOfOperations[id].operaciones.Add(op);
+				}
+
 				return Ok(product);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
@@ -87,7 +108,7 @@ namespace Server.Controllers
 		
 
 		[HttpPost("div")]
-		public async Task<IActionResult> Div([FromBody] Div div)
+		public async Task<IActionResult> Div([FromBody] Div div, [FromHeader] string id)
 		{
 			int[] numbers = { div.dividend, div.divisor };
 			try
@@ -98,6 +119,25 @@ namespace Server.Controllers
 					 quotient= result[0],
 					 remainder = result[1]
 				};
+
+				if (id.Length > 0)
+				{
+					var cadena =numbers[0]+ "/" + numbers[1] + "= quotient:" + result[0] + ", remainder:"+ result[1];
+					Operation op = new Operation
+					{
+						operation = "div",
+						calculation = cadena,
+						date = DateTime.Now
+
+					};
+
+					if (!dictionaryOfOperations.ContainsKey(id))
+					{
+						dictionaryOfOperations.Add(id, new ListOfOperations());
+					}
+					dictionaryOfOperations[id].operaciones.Add(op);
+				}
+
 				return Ok(divResult);
 			}
 			catch (Exception e)
@@ -107,7 +147,8 @@ namespace Server.Controllers
 		}
 
 		[HttpPost("sqrt")]
-		public async Task<IActionResult> Sqrt([FromBody] Sqrt sqrt){
+		public async Task<IActionResult> Sqrt([FromBody] Sqrt sqrt, [FromHeader] string id)
+		{
 			int number =sqrt.number;
 			try
 			{
@@ -116,6 +157,24 @@ namespace Server.Controllers
 				{
 					square = result
 				};
+
+				if (id.Length > 0)
+				{
+					var cadena = "square(" + number + ")="+result;
+					Operation op = new Operation
+					{
+						operation = "square",
+						calculation = cadena,
+						date = DateTime.Now
+
+					};
+					if (!dictionaryOfOperations.ContainsKey(id))
+					{
+						dictionaryOfOperations.Add(id, new ListOfOperations());
+					}
+					dictionaryOfOperations[id].operaciones.Add(op);
+				}
+
 				return Ok(square);
 			}
 			catch (Exception e)
@@ -124,15 +183,28 @@ namespace Server.Controllers
 			}
 		}
 
+		[HttpGet("operations")]
+		public async Task<IActionResult> GetAllOperationForTheUser([FromHeader]string id){
+			try
+			{
+				return Ok(dictionaryOfOperations[id].operaciones);
+			}catch(Exception e){
+				return BadRequest(GenerateBadRequest());
+			}
+		}
+
+
+
+
 		public Operation GetOperation(List<int> num, int sum, string sign)
 		{
 			string cadena = "";
 
 			foreach (int n in num)
 			{
-				cadena += n + " +";
+				cadena += n +" " +sign + " ";
 			}
-			cadena = cadena.Substring(0, cadena.Length - 2) + " = " + sum;
+			cadena = cadena.Substring(0, cadena.Length - 3) + "= " + sum;
 
 			Operation op = new Operation
 			{
