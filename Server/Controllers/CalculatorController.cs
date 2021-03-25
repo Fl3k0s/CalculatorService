@@ -22,7 +22,6 @@ namespace Server.Controllers
 			_operations = operations;
 		}
 
-
 		[HttpPost("add")]
 		public async Task<IActionResult> Add([FromBody] Adds numbers, [FromHeader]string id){
 			try{
@@ -49,8 +48,6 @@ namespace Server.Controllers
 				return BadRequest(GenerateBadRequest());
 			}
 		}
-
-		
 
 		[HttpPost("sub")]
 		public async Task<IActionResult> Sub([FromBody] Sub sub, [FromHeader] string id)
@@ -104,8 +101,6 @@ namespace Server.Controllers
 				return BadRequest(GenerateBadRequest());
 			}
 		}
-
-		
 
 		[HttpPost("div")]
 		public async Task<IActionResult> Div([FromBody] Div div, [FromHeader] string id)
@@ -192,9 +187,6 @@ namespace Server.Controllers
 				return BadRequest(GenerateBadRequest());
 			}
 		}
-
-
-
 
 		public Operation GetOperation(List<int> num, int sum, string sign)
 		{

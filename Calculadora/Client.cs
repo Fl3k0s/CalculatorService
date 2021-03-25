@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using Calculadora.Models;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Calculadora
@@ -87,7 +83,7 @@ namespace Calculadora
 					case "exit":
 						break;
 					default:
-						//si el usuario escribe un comando que no corresponde o escribe un comando mal se le informara
+						//if the user writes a command that does not correspond or writes a wrong command they will be informed
 						Console.WriteLine("comand not exist, try again");
 						break;
 						
@@ -187,7 +183,6 @@ namespace Calculadora
 			}
 			
 		}
-
 		
 		public async static Task<string> ApiCall(string url, Object o)
 		{
@@ -290,6 +285,7 @@ namespace Calculadora
 			} while ((numbers.Count < 2) || (!exit));
 			
 		}
+
 		//chek if the user want's to continue or not
 		public static bool ContinueValidate(string msg){
 			bool validate = false;
