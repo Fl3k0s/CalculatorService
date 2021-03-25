@@ -11,3 +11,16 @@ C:\Users\odiezma_evicertia\source\repos\Calculadora\Calculadora\obj\Debug\netcor
 C:\Users\odiezma_evicertia\source\repos\Calculadora\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.dll
 C:\Users\odiezma_evicertia\source\repos\Calculadora\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.pdb
 C:\Users\odiezma_evicertia\source\repos\Calculadora\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.genruntimeconfig.cache
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Calculadora.exe
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Calculadora.deps.json
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Calculadora.runtimeconfig.json
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Calculadora.runtimeconfig.dev.json
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Calculadora.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Calculadora.pdb
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.csprojAssemblyReference.cache
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.AssemblyInfoInputs.cache
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.AssemblyInfo.cs
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.csproj.CoreCompileInputs.cache
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.dll
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.pdb
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.genruntimeconfig.cache

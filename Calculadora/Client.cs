@@ -1,19 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
-
+using Calculadora.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Channels;
+using System.Threading.Tasks;
 
 namespace Calculadora
 {
 	public class Client
 	{
 		private static List<int> numbers;
-		private static readonly HttpClient client = new HttpClient();
+		private static HttpClient client;
 		private static string trackId;
+		private static HttpClientHandler clientHandler = new HttpClientHandler();
+
+
 		public static void Main(string[] args)
 		{
+			clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+			client = new HttpClient(clientHandler);
 			//ask the user for him id
 			Console.WriteLine("Tell me your id (if you don have, relax, can be empty)");
 			trackId = Console.ReadLine();
@@ -38,10 +48,10 @@ namespace Calculadora
 
 				//leemos el comando que quiere el usuario
 				command = Console.ReadLine().ToLower().Trim();
-
-				//Leemos los numeros con los que quiere operar el usuario
 				
-
+				//in the case of add or mult the client have entered 2 or more numbers
+				//in the case of sub and div the client have entered 2 numbers
+				//in the case of sqrt the client have entered only 1 number
 				switch (command)
 				{
 					case "add":
@@ -62,7 +72,7 @@ namespace Calculadora
 						break;
 					case "sqrt":
 						int n = ReadNumber();
-						Square();
+						Square(n);
 						break;
 					case "exit":
 						Console.WriteLine("Good bye");
@@ -75,41 +85,89 @@ namespace Calculadora
 			} while (!command.Equals("exit"));
 		}
 
-		public static void Add()
+		public async static void Add()
 		{
-			string url = $"http://localhost:8080/calculator/add";
+			string url = $"http://localhost:5000/calculator/add";
 
+			Adds add = new Adds
+			{
+				addens = numbers
+			};
+			var request = ApiCall(url, add);
+			var result = JsonSerializer.Deserialize<Sum>(await request);
+			Console.WriteLine(result.sum);
+		}
+
+		public async static void Sub(){
+			string url = $"http://localhost:5000/calculator/sub";
+			Sub sub = new Sub
+			{
+				minuend = numbers[0],
+				subtrahen = numbers[1]
+			};
+
+			var request = ApiCall(url, sub);
+			var result = JsonSerializer.Deserialize<Diference>(await request);
+			Console.WriteLine(result.diference);
+		}
+
+		public async static void Mult(){
+			string url = $"http://localhost:5000/calculator/mult";
+
+			Factors fact = new Factors
+			{
+				factors = numbers
+			};
+
+			var request = ApiCall(url, fact);
+			var result = JsonSerializer.Deserialize<Product>(await request);
+			Console.WriteLine(result.product);
+		}
+
+		public async static void Div(){
+			string url = $"http://localhost:5000/calculator/div";
+
+			Div div = new Div
+			{
+				dividend = numbers[0],
+				divisor = numbers[1]
+			};
+
+			var request = ApiCall(url, div);
+			var result = JsonSerializer.Deserialize<DivResult>(await request);
+			Console.WriteLine("quotient: "+ result.quotient);
+			Console.WriteLine("remainder: " + result.remainder);
+		}
+
+		public async static void Square(int n){
+			string url = $"http://localhost:5000/calculator/sqrt";
+			Sqrt sqrt = new Sqrt {
+				number = n
+			};
+			var request = ApiCall(url, sqrt);
+			var result = JsonSerializer.Deserialize<Square>(await request);
+			Console.WriteLine(result.square);
 
 		}
 
-		public static void Sub(){
-			string url = $"http://localhost:8080/calculator/sub";
-			
+		public async static Task<string> ApiCall(string url, Object o)
+		{
+			var json = JsonSerializer.Serialize(o);
+			var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+			var response = await client.PostAsync(url, content);
+
+			if (response.StatusCode == HttpStatusCode.OK)
+			{
+				var responseString = await response.Content.ReadAsStringAsync();
+				return responseString;
+			}
+			else
+			{
+				Console.WriteLine(response.ToString());
+				return null;
+			}
+
 		}
-
-		public static void Mult(){
-			string url = $"http://localhost:8080/calculator/mult";
-		}
-
-		public static void Div(){
-			string url = $"http://localhost:8080/calculator/div";
-		}
-
-		public static void Square(){
-			string url = $"http://localhost:8080/calculator/pow";
-		}
-
-		
-
-		
-		/*public static HttpWebRequest RequestAPI(string url){
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.Method = "POST";
-			request.ContentType = "application/json";
-			request.Accept = "application/json";
-			
-			return request;
-		}*/
 
 		public static void ReadOnlyTwoNumbers(){
 			numbers = new List<int>();

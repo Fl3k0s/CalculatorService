@@ -27,14 +27,22 @@ namespace Server.Controllers
 		{
 			factors = new List<int>()
 		};
+
+		[HttpGet("sqrt")]
+		public async Task<IActionResult> PruevaSqrt(){
+			return Ok(new Sqrt
+			{
+				number = 4
+			});
+		}
 		
 		
 		[HttpGet]
-		public async Task<Factors> Prueba(){
+		public IActionResult Prueba(){
 			f.factors.Add(1);
 			f.factors.Add(2);
 			f.factors.Add(3);
-			return f;
+			return Ok(f);
 		}
 
 		[HttpPost("post")]

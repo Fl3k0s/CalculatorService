@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Server.Service;
 using Server.Models;
+
 namespace Server.Controllers
 {
 	[Route("[controller]")]
@@ -18,21 +19,25 @@ namespace Server.Controllers
 		{
 			_operations = operations;
 			listOfOperations = new Dictionary<string, Operation>();
+			
 		}
 
+
 		[HttpPost("add")]
-		public IActionResult Add([FromBody] List<int> numbers, string id){
+		public async Task<IActionResult> Add([FromBody] Adds numbers){
 			try{
-				int sum = _operations.Add(numbers);
+
+				int sum = _operations.Add(numbers.addens);
 				Sum add = new Sum
 				{
 					sum = sum
 				};
 
-				if (id.Length > 0){
+
+				/*if (id.Length > 0){
 					Operation op = GetOperation(numbers, sum, " + ");
 					listOfOperations.Add(id, op);
-				}
+				}*/
 				return Ok(add);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
@@ -56,8 +61,9 @@ namespace Server.Controllers
 				return BadRequest(GenerateBadRequest());
 			}
 		}
+
 		[HttpPost("mult")]
-		public IActionResult Mult([FromBody] Factors factors, string id){
+		public async Task<IActionResult> Mult([FromBody] Factors factors){
 			List<int> numbers = factors.factors;
 
 			try{
@@ -66,20 +72,22 @@ namespace Server.Controllers
 				{
 					product = result
 				};
-
+				/*
 				if (id.Length > 0)
 				{
 					Operation op = GetOperation(numbers, result, " * ");
 					listOfOperations.Add(id, op);
-				}
+				}*/
 				return Ok(product);
 			}catch(Exception e){
 				return BadRequest(GenerateBadRequest());
 			}
 		}
 
+		
+
 		[HttpPost("div")]
-		public IActionResult Div([FromBody] Div div)
+		public async Task<IActionResult> Div([FromBody] Div div)
 		{
 			int[] numbers = { div.dividend, div.divisor };
 			try
@@ -99,7 +107,7 @@ namespace Server.Controllers
 		}
 
 		[HttpPost("sqrt")]
-		public IActionResult Sqrt([FromBody] Sqrt sqrt){
+		public async Task<IActionResult> Sqrt([FromBody] Sqrt sqrt){
 			int number =sqrt.number;
 			try
 			{

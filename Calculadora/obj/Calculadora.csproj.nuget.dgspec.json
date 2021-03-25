@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Calculadora\\Calculadora.csproj": {}
+    "C:\\dev\\calculadoraOscar.git\\Calculadora\\Calculadora.csproj": {}
   },
   "projects": {
-    "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Calculadora\\Calculadora.csproj": {
+    "C:\\dev\\calculadoraOscar.git\\Calculadora\\Calculadora.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Calculadora\\Calculadora.csproj",
+        "projectUniqueName": "C:\\dev\\calculadoraOscar.git\\Calculadora\\Calculadora.csproj",
         "projectName": "Calculadora",
-        "projectPath": "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Calculadora\\Calculadora.csproj",
+        "projectPath": "C:\\dev\\calculadoraOscar.git\\Calculadora\\Calculadora.csproj",
         "packagesPath": "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Calculadora\\obj\\",
+        "outputPath": "C:\\dev\\calculadoraOscar.git\\Calculadora\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\odiezma_evicertia\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Server\\Server.csproj",
+      "projectUniqueName": "C:\\dev\\calculadoraOscar.git\\Server\\Server.csproj",
       "projectName": "Server",
-      "projectPath": "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Server\\Server.csproj",
+      "projectPath": "C:\\dev\\calculadoraOscar.git\\Server\\Server.csproj",
       "packagesPath": "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\odiezma_evicertia\\source\\repos\\Calculadora\\Server\\obj\\",
+      "outputPath": "C:\\dev\\calculadoraOscar.git\\Server\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\odiezma_evicertia\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -7,9 +7,9 @@ namespace Server.Models
 {
 	public class Operation
 	{
-		string operation { get; set; }
-		string calculation { get; set; }
-		DateTime date { get; set; }
+		public string operation { get; set; }
+		public string calculation { get; set; }
+		public DateTime date { get; set; }
 
 	}
 }
