@@ -24,11 +24,13 @@ namespace Calculadora
 			Console.WriteLine("Tell me your id (if you don have, relax, can be empty)");
 			trackId = Console.ReadLine();
 			trackId = trackId.Trim();
+			//add the id to the header that JSON
 			client.DefaultRequestHeaders.Add("id", trackId);
 			
 			//the menu of the app
 			Action();
 
+			//if exist id, see the operations
 			if (trackId.Length > 0)
 				OperationsPerformed();
 
@@ -51,10 +53,11 @@ namespace Calculadora
 
 				//leemos el comando que quiere el usuario
 				command = Console.ReadLine().ToLower().Trim();
-				
+
 				//in the case of add or mult the client have entered 2 or more numbers
 				//in the case of sub and div the client have entered 2 numbers
 				//in the case of sqrt the client have entered only 1 number
+				//once selected, do the operation
 				switch (command)
 				{
 					case "add":
@@ -77,21 +80,17 @@ namespace Calculadora
 						int n = ReadNumber();
 						Square(n);
 						break;
-					case "operations":
-						OperationsPerformed();
-						break;
 					case "exit":
 						break;
 					default:
 						//if the user writes a command that does not correspond or writes a wrong command they will be informed
 						Console.WriteLine("comand not exist, try again");
-						break;
-						
-				}
-				
+						break;						
+				}	
 			} while (!command.Equals("exit"));
 		}
 
+		//the add operation
 		public async static void Add()
 		{
 			string url = $"http://localhost:5000/calculator/add";
@@ -103,10 +102,11 @@ namespace Calculadora
 
 			
 			var request = ApiCall(url, add);
-			var result = JsonSerializer.Deserialize<Sum>(await request);
+			var result = JsonSerializer.Deserialize<Sum>(request.Result.ToString());
 			Console.WriteLine(result.sum);
 		}
 
+		//the sub operation
 		public async static void Sub(){
 			string url = $"http://localhost:5000/calculator/sub";
 			Sub sub = new Sub
@@ -116,10 +116,11 @@ namespace Calculadora
 			};
 
 			var request = ApiCall(url, sub);
-			var result = JsonSerializer.Deserialize<Diference>(await request);
+			var result = JsonSerializer.Deserialize<Diference>(request.Result.ToString());
 			Console.WriteLine(result.diference);
 		}
 
+		//the multiplication operation
 		public async static void Mult(){
 			string url = $"http://localhost:5000/calculator/mult";
 
@@ -133,6 +134,7 @@ namespace Calculadora
 			Console.WriteLine(result.product);
 		}
 
+		//the divide operation
 		public async static void Div(){
 			string url = $"http://localhost:5000/calculator/div";
 
@@ -143,30 +145,33 @@ namespace Calculadora
 			};
 
 			var request = ApiCall(url, div);
-			var result = JsonSerializer.Deserialize<DivResult>(await request);
+			var result = JsonSerializer.Deserialize<DivResult>(request.Result.ToString());
 			Console.WriteLine("quotient: "+ result.quotient);
 			Console.WriteLine("remainder: " + result.remainder);
 		}
 
+		//the square operation
 		public async static void Square(int n){
 			string url = $"http://localhost:5000/calculator/sqrt";
 			Sqrt sqrt = new Sqrt {
 				number = n
 			};
 			var request = ApiCall(url, sqrt);
-			var result = JsonSerializer.Deserialize<Square>(await request);
+			var result = JsonSerializer.Deserialize<Square>(request.Result.ToString());
 			Console.WriteLine(result.square);
 
 		}
 
+		//if the user have id see the operations whith this function
 		public async static void OperationsPerformed(){
 			string url = $"http://localhost:5000/calculator/operations";
 
-			var response = await client.GetAsync(url);
+			var response = client.GetAsync(url).Result;
 			string responseString = "";
+			responseString = response.Content.ReadAsStringAsync().Result.ToString();
+			//if have operation see
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				responseString = await response.Content.ReadAsStringAsync();
 				var result = JsonSerializer.Deserialize<List<Operation>>(responseString);
 				foreach (Operation o in result)
 				{
@@ -176,14 +181,17 @@ namespace Calculadora
 					Console.WriteLine("Date:"+o.date);
 				}
 			}
+			//else see the message error
 			else
 			{
-				Console.WriteLine(response.ToString());
+				var result = JsonSerializer.Deserialize<List<Error>>(responseString);
+				Console.WriteLine(response.RequestMessage);
 				
 			}
 			
 		}
 		
+		//call the api and return the result
 		public async static Task<string> ApiCall(string url, Object o)
 		{
 			var json = JsonSerializer.Serialize(o);
@@ -199,12 +207,11 @@ namespace Calculadora
 			else
 			{
 				Console.WriteLine(response.ToString());
-				return "a llorar a cuenca";
+				return "";
 			}
-
-			return "cagandome en lo cagable";
 		}
 
+		//the function that read only two numbers (for div and sub)
 		public static void ReadOnlyTwoNumbers(){
 			numbers = new List<int>();
 			//number to introduce in the list
@@ -231,6 +238,7 @@ namespace Calculadora
 			} while ((numbers.Count < 2));
 		}
 
+		//the function that read only one number (for square)
 		public static int ReadNumber(){
 			
 			//number to introduce in the list
@@ -257,6 +265,7 @@ namespace Calculadora
 			return 1;
 		}
 
+		//the function that read unlimited numbers (for sum and mult)
 		public static void ReadNumbers(){
 			//init the list of numbers in thew memory direction
 			numbers = new List<int>();

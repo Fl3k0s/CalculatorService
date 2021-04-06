@@ -17,21 +17,24 @@ namespace Server.Controllers
 		private static ListOfOperations listOfOperations = new ListOfOperations();
 		private static Dictionary<string, ListOfOperations> dictionaryOfOperations = new Dictionary<string, ListOfOperations>();
 
+		//create intace ofe service
 		public CalculatorController(IOperations operations)
 		{
 			_operations = operations;
 		}
 
+		//the function who have the add operation
 		[HttpPost("add")]
 		public async Task<IActionResult> Add([FromBody] Adds numbers, [FromHeader]string id){
 			try{
-				
+				//this call a function who have the code that operation and return the result
 				int sum = _operations.Add(numbers.addens);
+				//create the Sum object
 				Sum add = new Sum
 				{
 					sum = sum
 				};
-
+				//if the user have id, save the operation
 				if (id.Length > 0)
 				{
 					Operation op = GetOperation(numbers.addens, sum, " + ");
@@ -45,20 +48,28 @@ namespace Server.Controllers
 
 				return Ok(add);
 			}catch(Exception e){
+				//if have an error return bad request
 				return BadRequest(GenerateBadRequest());
 			}
 		}
 
+		//the function who have the sub operation
 		[HttpPost("sub")]
 		public async Task<IActionResult> Sub([FromBody] Sub sub, [FromHeader] string id)
 		{
+			//save the two numbers in this array to send in the sub function
 			int[] numbers = { sub.minuend,sub.subtrahen};
 			try{
+				//this call a function who have the code that operation and return the result
 				int result = _operations.Sub(numbers);
+
+				//create the Diference object
 				Diference dif = new Diference
 				{
 					diference = result
 				};
+
+				//if the user have id, save the operation
 				if (id.Length > 0)
 				{
 					Operation op = GetOperation(numbers.ToList<int>(), result, " - ");
@@ -71,6 +82,7 @@ namespace Server.Controllers
 				}
 				return Ok(dif);
 			}catch(Exception e){
+				//if have an error return bad request
 				return BadRequest(GenerateBadRequest());
 			}
 		}
@@ -79,12 +91,16 @@ namespace Server.Controllers
 		public async Task<IActionResult> Mult([FromBody] Factors factors, [FromHeader] string id)
 		{
 			try{
+				//this call a function who have the code that operation and return the result
 				int result = _operations.Mult(factors.factors);
+
+				//create the Product object
 				Product product = new Product
 				{
 					product = result
 				};
-				
+
+				//if the user have id, save the operation
 				if (id.Length > 0)
 				{
 					Operation op = GetOperation(factors.factors, result, " * ");
@@ -98,6 +114,7 @@ namespace Server.Controllers
 
 				return Ok(product);
 			}catch(Exception e){
+				//if have an error return bad request
 				return BadRequest(GenerateBadRequest());
 			}
 		}
@@ -108,13 +125,17 @@ namespace Server.Controllers
 			int[] numbers = { div.dividend, div.divisor };
 			try
 			{
+				//this call a function who have the code that operation and return the result
 				int[] result = _operations.Div(numbers);
+
+				//create the Division object
 				DivResult divResult = new DivResult
 				{
 					 quotient= result[0],
 					 remainder = result[1]
 				};
 
+				//if the user have id, save the operation
 				if (id.Length > 0)
 				{
 					var cadena =numbers[0]+ "/" + numbers[1] + "= quotient:" + result[0] + ", remainder:"+ result[1];
@@ -137,6 +158,7 @@ namespace Server.Controllers
 			}
 			catch (Exception e)
 			{
+				//if have an error return bad request
 				return BadRequest(GenerateBadRequest());
 			}
 		}
@@ -147,12 +169,16 @@ namespace Server.Controllers
 			int number =sqrt.number;
 			try
 			{
+				//this call a function who have the code that operation and return the result
 				int result = _operations.Sqrt(number);
+
+				//create the Square object
 				Square square = new Square
 				{
 					square = result
 				};
 
+				//if the user have id, save the operation
 				if (id.Length > 0)
 				{
 					var cadena = "square(" + number + ")="+result;
@@ -174,6 +200,7 @@ namespace Server.Controllers
 			}
 			catch (Exception e)
 			{
+				//if have an error return bad request
 				return BadRequest(GenerateBadRequest());
 			}
 		}
@@ -182,8 +209,10 @@ namespace Server.Controllers
 		public async Task<IActionResult> GetAllOperationForTheUser([FromHeader]string id){
 			try
 			{
+				//return the operation that the user have this id
 				return Ok(dictionaryOfOperations[id].operaciones);
 			}catch(Exception e){
+				//if have an error return bad request
 				return BadRequest(GenerateBadRequest());
 			}
 		}
