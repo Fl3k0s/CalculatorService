@@ -20,7 +20,7 @@ namespace Calculadora
 		{
 			clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
 			client = new HttpClient(clientHandler);
-			//ask the user for him id
+			//ask the user for him id.
 			Console.WriteLine("Tell me your id (if you don have, relax, can be empty)");
 			trackId = Console.ReadLine();
 			trackId = trackId.Trim();
