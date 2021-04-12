@@ -1,8 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "pGAEMCwSmVddfulg1W5Uu2UuNxZb4Jr/uOInyieD+cKdwdURbbt+ah3rvlY88jcYz7OgcjCdQBu+v2NBnwpB8w==",
+  "dgSpecHash": "XAQ5kpsSdj6csS5Ox2bSbPKVI/4TSBhLmmlBhlzu9xdm++Yg03Fgr33WOFX23Vr4WtWCff4KmfFb6OSrxQtoIQ==",
   "success": true,
   "projectFilePath": "C:\\dev\\calculadoraOscar.git\\Calculadora\\Calculadora.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.configuration\\3.0.0\\microsoft.extensions.configuration.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\3.0.0\\microsoft.extensions.configuration.abstractions.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.configuration.binder\\3.0.0\\microsoft.extensions.configuration.binder.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.0.0\\microsoft.extensions.dependencyinjection.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.0.0\\microsoft.extensions.dependencyinjection.abstractions.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.logging\\3.0.0\\microsoft.extensions.logging.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.0.0\\microsoft.extensions.logging.abstractions.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.options\\3.0.0\\microsoft.extensions.options.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\microsoft.extensions.primitives\\3.0.0\\microsoft.extensions.primitives.3.0.0.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\nlog\\4.7.9\\nlog.4.7.9.nupkg.sha512",
+    "C:\\Users\\odiezma_evicertia\\.nuget\\packages\\nlog.extensions.logging\\1.7.2\\nlog.extensions.logging.1.7.2.nupkg.sha512"
+  ],
   "logs": []
 }

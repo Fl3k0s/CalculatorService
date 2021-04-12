@@ -24,3 +24,16 @@ C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.cspr
 C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.dll
 C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.pdb
 C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.genruntimeconfig.cache
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Configuration.Binder.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Logging.Abstractions.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\NLog.dll
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\NLog.Extensions.Logging.dll
+C:\dev\calculadoraOscar.git\Calculadora\obj\Debug\netcoreapp3.1\Calculadora.csproj.CopyComplete
+C:\dev\calculadoraOscar.git\Calculadora\bin\Debug\netcoreapp3.1\NLog.config
